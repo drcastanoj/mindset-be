@@ -5,14 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [
-    UserModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://daniel:CLN3ZhLSwIn7GFAR@cluster0.fpb0ptp.mongodb.net/?retryWrites=true&w=majority',
-      { dbName: 'mindset' },
-    ),
-  ],
+  imports: [UserModule, MongooseModule.forRoot('', { dbName: 'mindset' })],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
