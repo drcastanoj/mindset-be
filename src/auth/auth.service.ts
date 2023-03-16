@@ -9,16 +9,20 @@ export class AuthService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>, private userService: UserService) {}
 
     async validateUser(email: string , pass: string): Promise<any>{
-        console.log(email, pass);
-        let validate;
-        const user = await this.userModel.find().exec();
-        user.forEach((value) => {
-            console.log(value.email);
-            if (email && pass && value.pass == pass && value.email == email) {
-                validate = 'true';
-            } else {
-                validate = 'false';  
-            }
-        })
-    }
+        //let result;
+        const user: User = await this.userModel.findOne({email}).exec();
+        if (user && user.pass === pass) {
+            const { pass, ...result } = user;
+            console.log(result);
+            return result;
+          }
+          return null;
+        }
+        
 }
+
+class UserDto {
+    name: string;
+    pass: string;
+    email: string;
+  }
