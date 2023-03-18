@@ -6,8 +6,10 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller()
 export class AppController {
-  constructor(private appService: AppService,
-    private authService: AuthService) {}
+  constructor(
+    private appService: AppService,
+    private authService: AuthService,
+  ) {}
 
   @Get()
   getUsers(): string {
@@ -23,7 +25,6 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    console.log(req);
     return req.user;
   }
 }

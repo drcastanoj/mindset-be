@@ -7,8 +7,11 @@ import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
-  imports: [UserModule, MongooseModule.forRoot('', { dbName: 'mindset' }),
-    AuthModule],
+  imports: [
+    UserModule,
+    MongooseModule.forRoot('', { dbName: 'mindset' }),
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],
 })

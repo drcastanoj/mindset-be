@@ -9,17 +9,18 @@ import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constant';
 
-
 @Module({
   providers: [AuthService, LocalStrategy],
-  imports: [UserModule,
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), 
+  imports: [
+    UserModule,
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
-    }),],
+      signOptions: { expiresIn: '9000s' },
+    }),
+  ],
   controllers: [AuthController],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}
