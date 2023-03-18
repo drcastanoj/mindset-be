@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 @Module({
-  imports: [UserModule, MongooseModule.forRoot('mongodb+srv://daniel:CLN3ZhLSwIn7GFAR@cluster0.fpb0ptp.mongodb.net/?retryWrites=true&w=majority', { dbName: 'mindset' }), AuthModule],
+  imports: [UserModule, MongooseModule.forRoot('', { dbName: 'mindset' }),
+    AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}
