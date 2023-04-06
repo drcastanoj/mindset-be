@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Appointment, AppointmentDocument } from './appointment.schema';
 import { AppointmentDto } from './appointment.dto';
-import { UserService } from 'src/user/user.service';
+import { ClientService } from 'src/client/client.service';
 
 const HOUR_AVAILABLE = [8, 9, 10, 11, 12];
 
@@ -12,27 +12,24 @@ export class AppointmentService {
   constructor(
     @InjectModel(Appointment.name)
     private appointmentModel: Model<AppointmentDocument>,
-    private userService: UserService,
+    private clientService: ClientService,
   ) {}
 
-  async createAppointment(
-    createAppointmentDto: AppointmentDto,
-  ): Promise<Appointment> {
-    const user = this.userService.findOne(createAppointmentDto.email);
+  async createAppointment(appointmentDto: AppointmentDto): Promise<Appointment> {
+    const client: any = await this.clientService.findOne(appointmentDto.email);
 
-    if (user) {
-      // TODO Create appointment without email and name but with userId
-      const createdAppointment = new this.appointmentModel(
-        createAppointmentDto,
-      );
-      return createdAppointment.save();
+    if (!client) {
+      const newClient: any = await this.clientService.create(appointmentDto);
+      appointmentDto.userId = newClient._id;
+      console.log(newClient);
     } else {
-      // Create user email and name
-      // Create appointment
+      appointmentDto.userId = client._id;
     }
+    const createdAppointment = new this.appointmentModel(appointmentDto);
+    console.log(createdAppointment);
+    return createdAppointment.save();
   }
 
-  // date = 05-06-2023
   async getAvailableAppointments(date: string) {
     const appointments = this.appointmentModel.find({
       date: date,
