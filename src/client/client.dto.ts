@@ -1,5 +1,5 @@
 export class ClientDto {
-    name: string;
-    email: string;
-  }
+  name: string;
+  email: string;
+}
   

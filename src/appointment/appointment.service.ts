@@ -21,7 +21,6 @@ export class AppointmentService {
     if (!client) {
       const newClient: any = await this.clientService.create(appointmentDto);
       appointmentDto.userId = newClient._id;
-      console.log(newClient);
     } else {
       appointmentDto.userId = client._id;
     }
