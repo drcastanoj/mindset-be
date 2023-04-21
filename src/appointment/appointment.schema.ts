@@ -9,7 +9,13 @@ export class Appointment {
   userId: string;
 
   @Prop()
-  date: string;
+  day: number;
+
+  @Prop()
+  month: number;
+
+  @Prop()
+  year: number;
 
   @Prop()
   hour: number;

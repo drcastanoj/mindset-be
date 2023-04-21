@@ -29,13 +29,19 @@ export class AppointmentService {
     return createdAppointment.save();
   }
 
-  async getAvailableAppointments(date: string) {
+  async getAvailableAppointments(day: number, month: number, year: number) {
     const appointments = this.appointmentModel.find({
-      date: date,
+      day: day,
+      month: month,
+      year: year
     });
     const schedule = (await appointments).map((a) => a.hour);
     const available = HOUR_AVAILABLE.filter((ap) => !schedule.includes(ap));
 
     return available;
+  }
+
+  async findAppointmentsByMonthAndYear(month: number, year: number) {
+    return this.appointmentModel.find({ month: month, year: year }).exec();
   }
 }
