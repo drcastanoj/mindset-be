@@ -4,7 +4,6 @@ import { UserModule } from 'src/user/user.module';
 import { AppointmentController } from './appointment.constroller';
 import { Appointment, AppointmentSchema } from './appointment.schema';
 import { AppointmentService } from './appointment.service';
-import { ClientModule } from 'src/client/client.module';
 
 @Module({
   imports: [
@@ -12,7 +11,6 @@ import { ClientModule } from 'src/client/client.module';
       { name: Appointment.name, schema: AppointmentSchema },
     ]),
     UserModule,
-    ClientModule
   ],
   controllers: [AppointmentController],
   providers: [AppointmentService],

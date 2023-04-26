@@ -11,6 +11,7 @@ export class AppointmentDto {
   name: string;
   @IsNotEmpty()
   email: string;
+  pass: string;
 }
 
 export class DateDto {
