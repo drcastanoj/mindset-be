@@ -44,4 +44,8 @@ export class AppointmentService {
   async findAppointmentsByMonthAndYear(month: number, year: number) {
     return this.appointmentModel.find({ month: month, year: year }).exec();
   }
+
+  async findAppointmentsByDayAndMonthAndYear(day: number, month: number, year: number) {
+    return this.appointmentModel.find({ day: day, month: month, year: year }).exec();
+  }
 }

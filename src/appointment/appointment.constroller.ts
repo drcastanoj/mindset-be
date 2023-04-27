@@ -17,6 +17,12 @@ export class AppointmentController {
     return appointments;
   }
 
+  @Get('/FindByDay/:day/:month/:year')
+  async getAppointmentsByDay(@Param('day') day, @Param('month') month, @Param('year') year) {
+    const appointments = await this.appointmentService.findAppointmentsByDayAndMonthAndYear(day, month, year);
+    return appointments;
+  }  
+
   @Post()
   createAppointment(@Body() appointmentDto: AppointmentDto){
     return this.appointmentService.createAppointment(appointmentDto);
