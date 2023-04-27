@@ -1,19 +1,19 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
-import { AppointmentDto, DateDto, FindByMonthAndYearDto } from './appointment.dto';
+import { AppointmentDto } from './appointment.dto';
 
 @Controller('/appointment')
 export class AppointmentController {
   constructor(private appointmentService: AppointmentService) {}
 
-  @Get('/Available')
-  getAppointment(@Body() date: DateDto) {
-    return this.appointmentService.getAvailableAppointments(date.day, date.month, date.year);
+  @Get('/Available/:day/:month/:year')
+  getAppointment(@Param('day') day, @Param('month') month, @Param('year') year) {
+    return this.appointmentService.getAvailableAppointments(day, month, year);
   }
 
-  @Get('/FindByMonthAndYear')
-  async getAppointmentsByMonth(@Body() monthAndYear: FindByMonthAndYearDto) {
-    const appointments = await this.appointmentService.findAppointmentsByMonthAndYear(monthAndYear.month, monthAndYear.year);
+  @Get('/FindByMonthAndYear/:month/:year')
+  async getAppointmentsByMonth(@Param('month') month, @Param('year') year) {
+    const appointments = await this.appointmentService.findAppointmentsByMonthAndYear(month, year);
     return appointments;
   }
 

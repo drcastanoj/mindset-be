@@ -13,14 +13,3 @@ export class AppointmentDto {
   email: string;
   pass: string;
 }
-
-export class DateDto {
-  day: number;
-  month: number;
-  year: number;
-}
-
-export class FindByMonthAndYearDto{
-  month: number;
-  year: number;
-}
