@@ -15,7 +15,9 @@ export class AppointmentService {
     private userService: UserService,
   ) {}
 
-  async createAppointment(appointmentDto: AppointmentDto): Promise<Appointment> {
+  async createAppointment(
+    appointmentDto: AppointmentDto,
+  ): Promise<Appointment> {
     const user: any = await this.userService.findOne(appointmentDto.email);
 
     if (!user) {
@@ -33,7 +35,7 @@ export class AppointmentService {
     const appointments = this.appointmentModel.find({
       day: day,
       month: month,
-      year: year
+      year: year,
     });
     const schedule = (await appointments).map((a) => a.hour);
     const available = HOUR_AVAILABLE.filter((ap) => !schedule.includes(ap));
@@ -45,7 +47,17 @@ export class AppointmentService {
     return this.appointmentModel.find({ month: month, year: year }).exec();
   }
 
-  async findAppointmentsByDayAndMonthAndYear(day: number, month: number, year: number) {
-    return this.appointmentModel.find({ day: day, month: month, year: year }).exec();
+  async findAppointmentsByDayAndMonthAndYear(
+    day: number,
+    month: number,
+    year: number,
+  ) {
+    return this.appointmentModel
+      .find({ day: day, month: month, year: year })
+      .exec();
+  }
+
+  async removeAppointment(id: string): Promise<Appointment> {
+    return this.appointmentModel.findByIdAndDelete(id).exec();
   }
 }

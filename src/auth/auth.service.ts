@@ -13,7 +13,8 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     const user: User = await this.userService.findOne(email);
     if (user && user.pass === pass) {
-      const { pass, ...result } = user;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { pass: _pass, ...result } = user;
       return result;
     }
     return null;
