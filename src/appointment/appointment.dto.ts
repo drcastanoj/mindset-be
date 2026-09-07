@@ -7,7 +7,7 @@ export class AppointmentDto {
   @IsNotEmpty()
   month: number;
   @IsNotEmpty()
-  year: number
+  year: number;
   @IsNotEmpty()
   hour: number;
   reason: string;
