@@ -6,6 +6,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { AppointmentModule } from './appointment/appointment.module';
+import { TreatmentModule } from './treatment/treatment.module';
+import { HistoryModule } from './history/history.module';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
@@ -14,6 +16,8 @@ import { PassportModule } from '@nestjs/passport';
     MongooseModule.forRoot('', { dbName: 'mindset' }),
     AuthModule,
     AppointmentModule,
+    TreatmentModule,
+    HistoryModule,
     PassportModule,
   ],
   controllers: [AppController],
