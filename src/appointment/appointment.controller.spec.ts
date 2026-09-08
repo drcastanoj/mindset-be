@@ -12,6 +12,8 @@ describe('AppointmentController', () => {
     findAppointmentsByMonthAndYear: jest.fn(),
     findAppointmentsByDayAndMonthAndYear: jest.fn(),
     createAppointment: jest.fn(),
+    deleteAppointment: jest.fn(),
+    updateAppointment: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -128,6 +130,68 @@ describe('AppointmentController', () => {
       expect(result).toEqual(expectedAppointment);
       expect(appointmentService.createAppointment).toHaveBeenCalledWith(
         appointmentDto,
+      );
+    });
+  });
+
+  describe('deleteAppointment', () => {
+    it('should delete and return an appointment', async () => {
+      const appointmentId = '123';
+      const expectedAppointment = {
+        _id: appointmentId,
+        name: 'John Doe',
+        email: 'john@example.com',
+        day: 15,
+        month: 6,
+        year: 2023,
+        hour: 10,
+      };
+
+      mockAppointmentService.deleteAppointment.mockResolvedValue(
+        expectedAppointment,
+      );
+
+      const result = await controller.deleteAppointment(appointmentId);
+
+      expect(result).toEqual(expectedAppointment);
+      expect(appointmentService.deleteAppointment).toHaveBeenCalledWith(
+        appointmentId,
+      );
+    });
+  });
+
+  describe('updateAppointment', () => {
+    it('should update and return an appointment', async () => {
+      const appointmentId = '123';
+      const updateDto: Partial<AppointmentDto> = {
+        hour: 11,
+        reason: 'Updated reason',
+      };
+
+      const expectedAppointment = {
+        _id: appointmentId,
+        name: 'John Doe',
+        email: 'john@example.com',
+        day: 15,
+        month: 6,
+        year: 2023,
+        hour: 11,
+        reason: 'Updated reason',
+      };
+
+      mockAppointmentService.updateAppointment.mockResolvedValue(
+        expectedAppointment,
+      );
+
+      const result = await controller.updateAppointment(
+        appointmentId,
+        updateDto,
+      );
+
+      expect(result).toEqual(expectedAppointment);
+      expect(appointmentService.updateAppointment).toHaveBeenCalledWith(
+        appointmentId,
+        updateDto,
       );
     });
   });

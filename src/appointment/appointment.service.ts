@@ -56,4 +56,17 @@ export class AppointmentService {
       .find({ day: day, month: month, year: year })
       .exec();
   }
+
+  async deleteAppointment(id: string): Promise<Appointment> {
+    return this.appointmentModel.findByIdAndDelete(id).exec();
+  }
+
+  async updateAppointment(
+    id: string,
+    appointmentDto: Partial<AppointmentDto>,
+  ): Promise<Appointment> {
+    return this.appointmentModel
+      .findByIdAndUpdate(id, appointmentDto, { new: true })
+      .exec();
+  }
 }

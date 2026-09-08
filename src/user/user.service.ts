@@ -20,4 +20,12 @@ export class UserService {
   async findOne(email: string): Promise<User> {
     return await this.userModel.findOne({ email }).exec();
   }
+
+  async deleteUser(id: string): Promise<User> {
+    return this.userModel.findByIdAndDelete(id).exec();
+  }
+
+  async updateUser(id: string, userDto: Partial<UserDto>): Promise<User> {
+    return this.userModel.findByIdAndUpdate(id, userDto, { new: true }).exec();
+  }
 }

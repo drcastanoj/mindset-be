@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { AppointmentDto } from './appointment.dto';
 
@@ -40,5 +48,18 @@ export class AppointmentController {
   @Post()
   createAppointment(@Body() appointmentDto: AppointmentDto) {
     return this.appointmentService.createAppointment(appointmentDto);
+  }
+
+  @Delete(':id')
+  deleteAppointment(@Param('id') id: string) {
+    return this.appointmentService.deleteAppointment(id);
+  }
+
+  @Patch(':id')
+  updateAppointment(
+    @Param('id') id: string,
+    @Body() appointmentDto: Partial<AppointmentDto>,
+  ) {
+    return this.appointmentService.updateAppointment(id, appointmentDto);
   }
 }
