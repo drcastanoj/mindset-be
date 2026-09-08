@@ -10,6 +10,8 @@ describe('UserController', () => {
   const mockUserService = {
     findAll: jest.fn(),
     create: jest.fn(),
+    deleteUser: jest.fn(),
+    updateUser: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -66,6 +68,48 @@ describe('UserController', () => {
 
       expect(result).toEqual(expectedUser);
       expect(userService.create).toHaveBeenCalledWith(createUserDto);
+    });
+  });
+
+  describe('deleteUser', () => {
+    it('should delete and return a user', async () => {
+      const userId = '123';
+      const expectedUser = {
+        _id: userId,
+        name: 'User to Delete',
+        email: 'delete@example.com',
+        pass: 'password',
+      };
+
+      mockUserService.deleteUser.mockResolvedValue(expectedUser);
+
+      const result = await controller.deleteUser(userId);
+
+      expect(result).toEqual(expectedUser);
+      expect(userService.deleteUser).toHaveBeenCalledWith(userId);
+    });
+  });
+
+  describe('updateUser', () => {
+    it('should update and return a user', async () => {
+      const userId = '123';
+      const updateDto: Partial<UserDto> = {
+        name: 'Updated Name',
+      };
+
+      const expectedUser = {
+        _id: userId,
+        name: 'Updated Name',
+        email: 'user@example.com',
+        pass: 'password',
+      };
+
+      mockUserService.updateUser.mockResolvedValue(expectedUser);
+
+      const result = await controller.updateUser(userId, updateDto);
+
+      expect(result).toEqual(expectedUser);
+      expect(userService.updateUser).toHaveBeenCalledWith(userId, updateDto);
     });
   });
 });
